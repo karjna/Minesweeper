@@ -12,6 +12,7 @@ td{
 }
 table{
     margin: 0 auto;
+    border-spacing: 1px;
 }
 
 #application{
