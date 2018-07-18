@@ -80,6 +80,7 @@ class Board extends React.Component {
        return (<div>
            <div>
                <select id = "level" onChange={this.setDifficulty.bind(this)}>
+                    <option default value = "">Choose Difficulty</option>
                    <option value = "easy">easy</option>
                    <option value="medium">medium</option>
                    <option value = "hard">hard</option>

@@ -9802,6 +9802,11 @@ var Board = function (_React$Component) {
                         { id: 'level', onChange: this.setDifficulty.bind(this) },
                         _react2.default.createElement(
                             'option',
+                            { 'default': true, value: '' },
+                            'Choose Difficulty'
+                        ),
+                        _react2.default.createElement(
+                            'option',
                             { value: 'easy' },
                             'easy'
                         ),
@@ -31472,7 +31477,8 @@ var Tile = function (_React$Component) {
 
         _this.state = {
             clicked: false,
-            touching: 0
+            touching: 0,
+            value: _this.props.tile
         };
         _this.proximity = _this.proximity.bind(_this);
         return _this;
@@ -31491,7 +31497,9 @@ var Tile = function (_React$Component) {
 
             this.setState({ clicked: true }, function () {
                 if (_this2.state.clicked === true) {
-                    if (_this2.props.tile == 1) {} else {
+                    if (_this2.props.tile == 1) {
+                        _this2.setState({ value: "x" });
+                    } else {
                         _this2.proximity();
                     }
                 }
@@ -31505,13 +31513,7 @@ var Tile = function (_React$Component) {
         value: function proximity() {
             // based on position:
             // set starting touching value
-            // for(y=this.props.rowNo-1; y < this.props.rowNo+2; y++){
 
-            //      for (x = this.props.tileNo-1; y < this.props.tileNo+2; y++){
-            //          if (this.props.board[y][x]== 1){
-            //              this.state.touching++
-            //          }
-            //      }
             var topLeft = void 0,
                 topMiddle = void 0,
                 topRight = void 0,
@@ -31523,7 +31525,7 @@ var Tile = function (_React$Component) {
 
             // }
             if (this.props.rowNo - 1 >= 0 && this.props.tileNo - 1 >= 0) {
-                topleft = this.props.board[this.props.rowNo - 1][this.props.tileNo - 1] === undefined ? 0 : this.props.board[this.props.rowNo - 1][this.props.tileNo - 1];
+                topLeft = this.props.board[this.props.rowNo - 1][this.props.tileNo - 1] === undefined ? 0 : this.props.board[this.props.rowNo - 1][this.props.tileNo - 1];
             } else {
                 topLeft = 0;
             }
@@ -31571,16 +31573,23 @@ var Tile = function (_React$Component) {
             this.state.touching = topLeft + topMiddle + topRight + middleLeft + middleRight + bottomLeft + bottomMiddle + bottomRight;
 
             this.setState({ touching: this.state.touching });
+
+            if (this.state.touching > 0) {
+                this.setState({ value: this.state.touching });
+            } else {
+                this.setState({ value: "-" });
+            }
             // increment with every mine found
             // row before (-1 0 +1)
         }
     }, {
         key: 'render',
         value: function render() {
+
             return _react2.default.createElement(
                 'div',
                 { onClick: this.Reveal.bind(this) },
-                this.props.tile
+                this.state.value
             );
         }
     }]);

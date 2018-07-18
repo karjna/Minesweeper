@@ -7,7 +7,8 @@ class Tile extends React.Component {
 
         this.state = {
             clicked: false,
-            touching: 0
+            touching: 0,
+            value: this.props.tile
         }
         this.proximity = this.proximity.bind(this);
     }
@@ -22,9 +23,10 @@ class Tile extends React.Component {
         this.setState({clicked: true}, () => {
             if (this.state.clicked === true) {
                 if (this.props.tile ==1){
-
+                      this.setState({value : "x"})  
                 }else{
-                    this.proximity()
+                    this.proximity();
+
                 }
 
 
@@ -36,13 +38,7 @@ class Tile extends React.Component {
     proximity () {
         // based on position:
         // set starting touching value
-        // for(y=this.props.rowNo-1; y < this.props.rowNo+2; y++){
-            
-        //      for (x = this.props.tileNo-1; y < this.props.tileNo+2; y++){
-        //          if (this.props.board[y][x]== 1){
-        //              this.state.touching++
-        //          }
-        //      }
+      
         let topLeft,
             topMiddle,
             topRight,
@@ -54,7 +50,7 @@ class Tile extends React.Component {
         
         // }
         if (this.props.rowNo-1 >= 0 && this.props.tileNo-1 >= 0){
-         topleft =  this.props.board[this.props.rowNo-1][this.props.tileNo-1] === undefined ? 0 :  this.props.board[this.props.rowNo-1][this.props.tileNo-1];
+         topLeft =  this.props.board[this.props.rowNo-1][this.props.tileNo-1] === undefined ? 0 :  this.props.board[this.props.rowNo-1][this.props.tileNo-1];
         }else{
             topLeft = 0
         }
@@ -100,6 +96,12 @@ class Tile extends React.Component {
      
 
         this.setState({touching: this.state.touching})
+
+        if(this.state.touching > 0 ){
+            this.setState({value : this.state.touching}) 
+        }else{
+            this.setState({value : "-"}) 
+        }
         // increment with every mine found
         // row before (-1 0 +1)
     }
@@ -110,7 +112,8 @@ class Tile extends React.Component {
 
 
     render () {
-        return (<div onClick={this.Reveal.bind(this)}>{this.props.tile}</div>)
+        
+        return (<div onClick={this.Reveal.bind(this)}>{this.state.value}</div>)
     }
 }
 
