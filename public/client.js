@@ -9829,7 +9829,7 @@ var Board = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                     'table',
-                    null,
+                    { border: '1' },
                     console.log('inside index render', this.state),
                     _react2.default.createElement(_Rows2.default, { board: this.state.board })
                 )
@@ -31478,7 +31478,7 @@ var Tile = function (_React$Component) {
         _this.state = {
             clicked: false,
             touching: 0,
-            value: _this.props.tile
+            value: '•'
         };
         _this.proximity = _this.proximity.bind(_this);
         return _this;
@@ -31577,7 +31577,7 @@ var Tile = function (_React$Component) {
             if (this.state.touching > 0) {
                 this.setState({ value: this.state.touching });
             } else {
-                this.setState({ value: "-" });
+                this.setState({ value: "" });
             }
             // increment with every mine found
             // row before (-1 0 +1)

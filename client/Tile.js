@@ -8,7 +8,7 @@ class Tile extends React.Component {
         this.state = {
             clicked: false,
             touching: 0,
-            value: this.props.tile
+            value: '•'
         }
         this.proximity = this.proximity.bind(this);
     }
@@ -100,7 +100,7 @@ class Tile extends React.Component {
         if(this.state.touching > 0 ){
             this.setState({value : this.state.touching}) 
         }else{
-            this.setState({value : "-"}) 
+            this.setState({value : ""}) 
         }
         // increment with every mine found
         // row before (-1 0 +1)

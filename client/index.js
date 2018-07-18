@@ -88,7 +88,7 @@ class Board extends React.Component {
 
                <button onClick={this.createBoard.bind(this)}>Play</button>
             </div> 
-            <table>
+            <table border="1">
                 {console.log('inside index render', this.state)}
                 <Rows board = {this.state.board}/>
         
