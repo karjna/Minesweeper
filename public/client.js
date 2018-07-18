@@ -9645,8 +9645,8 @@ var Row = function (_React$Component) {
                 var tiles = this.props.row.map(function (tile, i) {
                     return _react2.default.createElement(
                         'td',
-                        null,
-                        _react2.default.createElement(_Tile2.default, { tile: tile, tileNo: i, rowNo: _this2.props.rowNo
+                        { key: i },
+                        _react2.default.createElement(_Tile2.default, { tile: tile, tileNo: i, rowNo: _this2.props.rowNo, board: _this2.props.board
                         })
                     );
                 });
@@ -31407,14 +31407,15 @@ var Rows = function (_React$Component) {
     _createClass(Rows, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
 
             if (this.props.board.length > 0) {
                 console.log('propss', this.props);
                 var rows = this.props.board.map(function (row, i) {
                     return _react2.default.createElement(
                         'tr',
-                        null,
-                        _react2.default.createElement(_Row2.default, { row: row, rowNo: i })
+                        { key: i },
+                        _react2.default.createElement(_Row2.default, { row: row, rowNo: i, board: _this2.props.board })
                     );
                 });
 
@@ -31504,13 +31505,72 @@ var Tile = function (_React$Component) {
         value: function proximity() {
             // based on position:
             // set starting touching value
-            for (y = this.props.rowNo - 1; y < this.props.rowNo + 2; y++) {
-                for (x = this.props.tileNo - 1; y < this.props.tileNo + 2; y++) {
-                    if (this.props.board[y][x] == 1) {
-                        this.state.touching++;
-                    }
-                }
+            // for(y=this.props.rowNo-1; y < this.props.rowNo+2; y++){
+
+            //      for (x = this.props.tileNo-1; y < this.props.tileNo+2; y++){
+            //          if (this.props.board[y][x]== 1){
+            //              this.state.touching++
+            //          }
+            //      }
+            var topLeft = void 0,
+                topMiddle = void 0,
+                topRight = void 0,
+                middleLeft = void 0,
+                middleRight = void 0,
+                bottomLeft = void 0,
+                bottomMiddle = void 0,
+                bottomRight = void 0;
+
+            // }
+            if (this.props.rowNo - 1 >= 0 && this.props.tileNo - 1 >= 0) {
+                topleft = this.props.board[this.props.rowNo - 1][this.props.tileNo - 1] === undefined ? 0 : this.props.board[this.props.rowNo - 1][this.props.tileNo - 1];
+            } else {
+                topLeft = 0;
             }
+
+            if (this.props.rowNo - 1 >= 0) {
+                topMiddle = this.props.board[this.props.rowNo - 1][this.props.tileNo] === undefined ? 0 : this.props.board[this.props.rowNo - 1][this.props.tileNo];
+            } else {
+                topMiddle = 0;
+            };
+
+            if (this.props.rowNo - 1 >= 0 && this.props.tileNo < this.props.board.length) {
+                topRight = this.props.board[this.props.rowNo - 1][this.props.tileNo + 1] === undefined ? 0 : this.props.board[this.props.rowNo - 1][this.props.tileNo + 1];
+            } else {
+                topRight = 0;
+            };
+
+            if (this.props.tileNo - 1 >= 0) {
+                middleLeft = this.props.board[this.props.rowNo][this.props.tileNo - 1] === undefined ? 0 : this.props.board[this.props.rowNo][this.props.tileNo - 1];
+            } else {
+                middleLeft = 0;
+            }
+            if (this.props.tileNo < this.props.board.length) {
+                middleRight = this.props.board[this.props.rowNo][this.props.tileNo + 1] === undefined ? 0 : this.props.board[this.props.rowNo][this.props.tileNo + 1];
+            } else {
+                middleRight = 0;
+            }
+
+            if (this.props.rowNo + 1 < this.props.board.length && this.props.tileNo - 1 >= 0) {
+                bottomLeft = this.props.board[this.props.rowNo + 1][this.props.tileNo - 1] === undefined ? 0 : this.props.board[this.props.rowNo + 1][this.props.tileNo - 1];
+            } else {
+                bottomLeft = 0;
+            }
+            if (this.props.rowNo + 1 < this.props.board.length) {
+                bottomMiddle = this.props.board[this.props.rowNo + 1][this.props.tileNo] === undefined ? 0 : this.props.board[this.props.rowNo + 1][this.props.tileNo];
+            } else {
+                bottomMiddle = 0;
+            }
+
+            if (this.props.rowNo + 1 < this.props.board.length && this.props.tileNo + 1 < this.props.board.length) {
+                bottomRight = this.props.board[this.props.rowNo + 1][this.props.tileNo + 1] === undefined ? 0 : this.props.board[this.props.rowNo + 1][this.props.tileNo + 1];
+            } else {
+                bottomRight = 0;
+            }
+
+            this.state.touching = topLeft + topMiddle + topRight + middleLeft + middleRight + bottomLeft + bottomMiddle + bottomRight;
+
+            this.setState({ touching: this.state.touching });
             // increment with every mine found
             // row before (-1 0 +1)
         }
@@ -31519,7 +31579,7 @@ var Tile = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { onClick: this.Reveal.bind(this) },
                 this.props.tile
             );
         }

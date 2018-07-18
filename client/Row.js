@@ -11,7 +11,7 @@ class Row extends React.Component {
     render () {
         if (this.props.row.length) {
             var tiles = this.props.row.map((tile,i)=>{
-                return (<td><Tile tile={tile} tileNo={i} rowNo={this.props.rowNo} 
+                return (<td key={i}><Tile tile={tile} tileNo={i} rowNo={this.props.rowNo} board={this.props.board}
                 /></td>)
               })
 

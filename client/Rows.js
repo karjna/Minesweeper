@@ -14,7 +14,7 @@ class Rows extends React.Component {
         if (this.props.board.length > 0) {
             console.log('propss', this.props)
             var rows = this.props.board.map((row, i)=>{
-                return (<tr><Row row={row} rowNo={i}/></tr>)
+                return (<tr key={i}><Row row={row} rowNo={i} board={this.props.board}/></tr>)
               })
 
          return ( <div>
