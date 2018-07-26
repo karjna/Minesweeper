@@ -1,5 +1,5 @@
 # Minesweeper
 
-Hello Cullen!
+Hello!
 
-To run this locally, run `npm run build` and then in a seperate tab `npm run start`
+To run this locally, run `npm run build` and then in a seperate tab in your terminal  `npm run start`
